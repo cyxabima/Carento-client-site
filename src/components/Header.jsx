@@ -2,15 +2,16 @@ import React from 'react'
 import { Button } from "./ui/button"
 import { Link, NavLink } from 'react-router-dom'
 const Header = () => {
-    const isLogged = true
+    const isLogged = false
     return (
         <nav className='flex justify-between p-3 shadow-2xs h-18 items-center'>
+            <NavLink to={"/"}>
             <div className='flex h-full items-center'>
-                <img src="/logo.png" alt="" width={"80px"}/>
+                <img src="/logo.png" alt="" width={"80px"} />
                 <span className='font-bold text-3xl'>Carento</span>
-
-
             </div>
+            </NavLink>
+            
             <ul className='hidden md:flex gap-16'>
                 <li className='font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary'><NavLink to={"/"} className={({ isActive }) => isActive ? "text-primary" : ""}> Home</NavLink></li>
                 <li className='font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary'><NavLink to={"/contact"} className={({ isActive }) => isActive ? "text-primary" : ""}>Contact</NavLink></li>

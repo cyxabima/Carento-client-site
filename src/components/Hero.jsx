@@ -8,8 +8,8 @@ function Hero() {
                 <h1 className='text-3xl font-bold'> “Find or List a Ride with Ease”</h1>
                 <h2 className='text-3xl'>Carento connects you with reliable vehicle rentals.</h2>
                 <div className='flex gap-4 md:mt-8 float-right'>
-                    <Button className={"md:p-3"}>Rent A Car</Button>
-                    <Button className={"md:p-3"}>List A Car</Button>
+                    <Button className={"md:p-5 md:text-xl shadow-2xs md:py-6 "}>Rent A Car</Button>
+                    <Button className={"md:p-5 md:text-xl shadow-2xs md:py-6 "}>List A Car</Button>
                 </div>
             </div>
             <div className='mt-7 md:float-right'>
