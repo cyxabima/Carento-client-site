@@ -5,6 +5,7 @@ import Customers from '../components/Customers'
 import { Separator } from '../components/ui/separator'
 import LatestCars from '../components/LatestCars'
 import Vendors from '../components/Vendors'
+import Footer from '../components/Footer'
 
 const Home = () => {
     return (
@@ -17,6 +18,9 @@ const Home = () => {
             <Customers />
             <Separator className=" bg-primary" />
             <Vendors />
+            <Separator className=" bg-primary" />
+            <Footer />
+
 
 
         </div>

@@ -10,7 +10,7 @@ function CarItem({ carData }) {
     return (
         <div className=' rounded-3xl border-white border-2 p-4 hover:shadow-md shadow-primary cursor-pointer sm:w-80 md:w-70'>
             {/* {Image of card} */}
-            <div className='w-[250px] h-[200px] mx-auto flex items-center justify-center bg-white rounded-xl overflow-hidden'>
+            <div className='w-[250px] h-[200px] mx-auto flex items-center justify-center bg-white rounded-xl overflow-hidden hover:shadow-primary  hover:scale-105 transition-all duration-500'>
                 <img src={carData?.image} alt="car" />
             </div>
 
