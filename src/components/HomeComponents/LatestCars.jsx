@@ -1,6 +1,6 @@
 import React from 'react'
-import CarItem from './CarItem'
-import CarsData from '../../public/CarsData'
+import CarItem from '../CarItem'
+import CarsData from '../../../public/CarsData'
 import {
     Carousel,
     CarouselContent,

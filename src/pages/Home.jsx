@@ -1,10 +1,10 @@
 import React from 'react'
 import Header from '../components/Header'
-import Hero from '../components/Hero'
-import Customers from '../components/Customers'
+import Hero from '../components/HomeComponents/Hero'
+import Customers from '../components/HomeComponents/Customers'
 import { Separator } from '../components/ui/separator'
-import LatestCars from '../components/LatestCars'
-import Vendors from '../components/Vendors'
+import LatestCars from '../components/HomeComponents/LatestCars'
+import Vendors from '../components/HomeComponents/Vendors'
 import Footer from '../components/Footer'
 
 const Home = () => {
