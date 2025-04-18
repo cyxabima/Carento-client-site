@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom";
@@ -15,6 +16,7 @@ export function LoginForm({
 
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
+
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
         <p className="text-muted-foreground text-sm text-balance">
@@ -22,6 +24,13 @@ export function LoginForm({
         </p>
       </div>
       <div className="grid gap-6">
+
+        <div className="grid gap-3 grid-cols-2">
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium">Vendor</span>
+            <Switch id="vendor" />
+          </div>
+        </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
           <Input id="email" type="email" placeholder="m@example.com" required />

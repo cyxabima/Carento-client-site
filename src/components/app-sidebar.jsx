@@ -38,7 +38,7 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "My Cars",
       url: "/vendor-dashboard",
       icon: IconDashboard,
     },
@@ -108,6 +108,7 @@ const data = {
   ],
 }
 
+const isAdmin = true
 export function AppSidebar({
   ...props
 }) {

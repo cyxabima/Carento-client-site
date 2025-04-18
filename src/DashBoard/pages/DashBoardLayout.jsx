@@ -6,20 +6,17 @@ import { Outlet } from 'react-router-dom'
 
 function DashBoardLayout() {
     return (
-        <>
+        <SidebarProvider>
 
-            <SidebarProvider>
-                <AppSidebar />
-                <main>
-                    <SiteHeader />
-                    <Outlet />
-                </main>
+            <AppSidebar />
+            <main className="flex-1 bg-rose-100">
+                <SiteHeader />
+                <Outlet />
+            </main>
 
-            </SidebarProvider>
-
-        </>
-
-    )
+        </SidebarProvider>
+    );
 }
+
 
 export default DashBoardLayout
