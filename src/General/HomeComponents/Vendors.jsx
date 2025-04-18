@@ -1,6 +1,6 @@
 import React from 'react'
 import { MdCarRental } from "react-icons/md";
-import { Button } from '../ui/button';
+import { Button } from '../../components/ui/button';
 
 
 

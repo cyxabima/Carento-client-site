@@ -2,7 +2,8 @@ import React from 'react'
 import { Button } from "./ui/button"
 import { Link, NavLink } from 'react-router-dom'
 const Header = () => {
-    const isLogged = false
+    const isLogged = true
+    const vendor = true
     return (
         <nav className='flex justify-between p-3 shadow-2xs h-18 items-center'>
             {/* logo */}
@@ -24,7 +25,7 @@ const Header = () => {
             </ul>
 
             {
-                isLogged ? <Button><Link to={"/my_account"}> My Account</Link> </Button> : <Button> <Link to={'/login'}>Login
+                isLogged ? <Button><Link to={vendor ? "/vendor-dashboard" : "/"}> DashBoard</Link> </Button> : <Button> <Link to={'/login'}>Login
                 </Link>  </Button>
             }
 

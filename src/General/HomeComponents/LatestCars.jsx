@@ -1,6 +1,6 @@
 import React from 'react'
-import CarItem from '../CarItem'
-import CarsData from '../../../public/CarsData'
+import CarItem from '../../components/CarItem'
+import CarsData from '/public/CarsData'
 import {
     Carousel,
     CarouselContent,
@@ -20,7 +20,7 @@ function LatestCars() {
 
                 <Carousel>
                     <CarouselContent>
-                        {CarsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5 " > <CarItem key={index} carData={car} /> </CarouselItem>)}
+                        {CarsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5" key={index} > <CarItem key={index} carData={car} /> </CarouselItem>)}
                         {/* <CarouselItem>1.<CarItem carData={""}/></CarouselItem> */}
                     </CarouselContent>
                     <CarouselPrevious />
