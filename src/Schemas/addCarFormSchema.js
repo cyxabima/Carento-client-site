@@ -36,26 +36,40 @@ export const addCarFormSchema = [
         icon: "FaGasPump"
     },
     {
-        label: "Color",
-        name: "color",
-        type: "input",
-        inputType: "text",
-        icon: "FaPalette"
-    },
-    {
         label: "Seats",
-        name: "seats",
+        name: "siting_capacity",
         type: "input",
         inputType: "number",
         icon: "FaChair"
     },
     {
         label: "Registration Number",
-        name: "registration_number",
+        name: "registration_no",
         type: "input",
         inputType: "text",
         icon: "FaIdCard"
     },
+    {
+        label: "Engine Size",
+        name: "engine_size",
+        type: "select",
+        options: [
+            "0.8L",
+            "1.0L",
+            "1.2L",
+            "1.3L",
+            "1.5L",
+            "1.8L",
+            "2.0L",
+            "2.4L",
+            "2.5L",
+            "3.0L",
+            "3.5L",
+            "4.0L+"
+        ],
+        icon: "FaTachometerAlt"
+    },
+
     {
         label: "Price Per Day (PKR)",
         name: "price_per_day",
@@ -64,12 +78,25 @@ export const addCarFormSchema = [
         icon: "FaMoneyBillWave"
     },
     {
-        label: "AC Available",
-        name: "ac",
+        label: "Car Category",
+        name: "car_category",
         type: "select",
-        options: ["Yes", "No"],
-        icon: "FaSnowflake"
-    },
+        options: [
+            "Hatchback",
+            "Sedan",
+            "SUV",
+            "Crossover",
+            "Coupe",
+            "Convertible",
+            "Pickup Truck",
+            "Van",
+            "Wagon",
+            "Sports Car",
+            "Luxury"
+        ],
+        icon: "FaCarSide"
+    }
+    ,
     {
         label: "Description",
         name: "description",

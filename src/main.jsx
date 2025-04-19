@@ -49,18 +49,7 @@ const router = createBrowserRouter([
   },
 ])
 
-const router2 = createBrowserRouter(
-  createRoutesFromElements(
 
-    <Route path='/' element={<MainLayout />}>
-      <Route path='/' element={<Home />} />
-      <Route path='/about' element={<About />} />
-      <Route path='/contact' element={<Contact />} />
-      <Route path='/vendor-dashboard' element={<DashBoardLayout />} />
-    </Route>
-
-
-  ))
 
 
 
