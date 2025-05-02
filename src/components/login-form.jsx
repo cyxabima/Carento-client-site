@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+
 
 export function LoginForm({
   className,
@@ -13,6 +15,59 @@ export function LoginForm({
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [isVendor, SetIsVendor] = useState(false)
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate()
+
+
+  const validate = () => {
+    let tempErrors = {};
+    if (!email.trim()) tempErrors.email = "Email is required"
+    else if (!/\S+@\S+\.\S+/.test(email)) tempErrors.email = "Email is invalid"
+    if (!password.trim()) tempErrors.password = "Password is Required"
+
+    setErrors(tempErrors)
+    return Object.keys(tempErrors).length === 0;
+  }
+
+  const loginSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return
+
+
+    const url = `/foo/api/v1/${isVendor ? "vendors" : "customers"}/login`
+
+    console.log(isVendor)
+    console.log(email)
+    console.log(password.trim())
+
+    const loginForm = new FormData()
+    loginForm.append("username", email)
+    loginForm.append("password", password)
+
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: loginForm
+      });
+
+      const res = await response.json()
+      if (!response.ok) {
+        alert(res.detail)
+        return
+      }
+
+      console.log(res)
+
+    } catch (error) {
+      console.error(error)
+    }
+
+    if (isVendor) navigate("/vendor-dashboard")
+
+  }
 
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
@@ -28,12 +83,24 @@ export function LoginForm({
         <div className="grid gap-3 grid-cols-2">
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium">Vendor</span>
-            <Switch id="vendor" />
+            <Switch
+              id="vendor"
+              checked={isVendor}
+              onCheckedChange={(checked) => SetIsVendor(checked)}
+            />
           </div>
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            onChange={(e) => setEmail(e.target.value)}
+            required />
+
+          {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -42,9 +109,16 @@ export function LoginForm({
               Forgot your password?
             </Link>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required />
+
+          {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" onClick={(e) => (loginSubmit(e))}>
           Login
         </Button>
 
@@ -55,6 +129,7 @@ export function LoginForm({
           Sign up
         </Link>
       </div>
+
     </form>
   );
 }

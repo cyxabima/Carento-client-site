@@ -11,10 +11,12 @@ import { addCarFormSchema } from "../../Schemas/addCarFormSchema";
 import * as FaIcons from "react-icons/fa";
 import { Button } from "../../components/ui/button";
 import { useCallback, useState } from "react";
+import UploadImage from "./UploadImage";
 
 export default function AddCarForm() {
     const [car, setCar] = useState({
         car_name: "",
+        image_url: "",
         model_year: "",
         brand: "",
         car_category: "",
@@ -26,6 +28,8 @@ export default function AddCarForm() {
         transmission: "",
         description: ""
     });
+
+    const [selectedFile, setSelectedFile] = useState(null)
 
     const token = {
         "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiVmVuZG9yIiwianRpIjoiMTllYzBjZjktMzFhZi00ZGEyLTg4NTYtZTQ1M2IyZDJkMzA3IiwiZXhwIjoxNzQ1NjgzOTczfQ.5DfuCAnZu9yWyLwlJJzzUHN2elYrUAGDIIG1DKiddLk",
@@ -40,10 +44,53 @@ export default function AddCarForm() {
         }));
     }, []);
 
+
+    const uploadToCloudinary = async () => {
+        if (!selectedFile) return ""
+        console.log(selectedFile)
+
+        let toUpload = new FormData()
+        toUpload.append("file", selectedFile)
+        toUpload.append("upload_preset", "CARENTO")
+        toUpload.append("cloud_name", "dmegjcmak")
+        console.log(toUpload)
+
+        const res = await fetch("https://api.cloudinary.com/v1_1/dmegjcmak/image/upload",
+            {
+                method: "POST",
+                body: toUpload
+            }
+        )
+
+        const uploaded = await res.json()
+        return uploaded.url
+
+
+
+    }
+
+    const validate = () => {
+        for (const element of Object.values(car)) {
+            if (!element?.trim()) return false
+        }
+        return true
+    }
+
     // Handler to add a car in backend
     const addCar = async (e) => {
         e.preventDefault();
-        // console.log(car)
+
+        const image_url = await uploadToCloudinary()
+        setCar((pre) => ({
+            ...pre, image_url: image_url
+        }))
+
+        if (!validate()) {
+            console.log("All fields are necessary")
+            return
+        }
+
+        console.log(car)
         const response = await fetch('http://127.0.0.1:8000/api/v1/vehicles/cars',
             {
                 method: "POST",
@@ -60,67 +107,71 @@ export default function AddCarForm() {
     }
 
     return (
-        <form className="grid gap-4 p-4  mx-auto bg-white shadow-xl rounded-xl" method="none">
-            {addCarFormSchema.map((field) => {
-                const IconComponent = FaIcons[field.icon];
+        <>
+            <form className="grid gap-4 p-4  mx-auto bg-white shadow-xl rounded-xl" method="none">
+                {addCarFormSchema.map((field) => {
+                    const IconComponent = FaIcons[field.icon];
 
-                return (
-                    <div key={field.name} className="flex flex-col gap-1">
-                        <label htmlFor={field.name} className="flex items-center gap-2 font-medium">
-                            <IconComponent className="text-gray-500" />
-                            {field.label}
-                        </label>
+                    return (
+                        <div key={field.name} className="flex flex-col gap-1">
+                            <label htmlFor={field.name} className="flex items-center gap-2 font-medium">
+                                <IconComponent className="text-gray-500" />
+                                {field.label}
+                            </label>
 
-                        {/* For Input field */}
+                            {/* For Input field */}
 
-                        {field.type === "input" && field.inputType !== "textarea" && (
-                            <Input
-                                type={field.inputType}
-                                name={field.name}
-                                id={field.name}
-                                placeholder={field.label}
-                                value={car[field.name] ?? ""}
-                                onChange={(e) => handleChange(field.name, e.target.value)}
-                                required
-                            />
-                        )}
+                            {field.type === "input" && field.inputType !== "textarea" && (
+                                <Input
+                                    type={field.inputType}
+                                    name={field.name}
+                                    id={field.name}
+                                    placeholder={field.label}
+                                    value={car[field.name] ?? ""}
+                                    onChange={(e) => handleChange(field.name, e.target.value)}
+                                    required
+                                />
+                            )}
 
-                        {/* For text area field */}
+                            {/* For text area field */}
 
-                        {field.type === "input" && field.inputType === "textarea" && (
-                            <Textarea
-                                name={field.name}
-                                id={field.name}
-                                placeholder={field.label}
-                                value={car[field.name] ?? ""}
-                                onChange={(e) => handleChange(field.name, e.target.value)}
-                            />
-                        )}
+                            {field.type === "input" && field.inputType === "textarea" && (
+                                <Textarea
+                                    name={field.name}
+                                    id={field.name}
+                                    placeholder={field.label}
+                                    value={car[field.name] ?? ""}
+                                    onChange={(e) => handleChange(field.name, e.target.value)}
+                                />
+                            )}
 
-                        {/* For Select fields */}
+                            {/* For Select fields */}
 
-                        {field.type === "select" && (
-                            <Select
-                                value={car[field.name] ?? ""}
-                                onValueChange={(value) => handleChange(field.name, value)}
-                            >
-                                <SelectTrigger id={field.name}>
-                                    <SelectValue placeholder={field.label} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {field.options?.map((option) => (
-                                        <SelectItem key={option} value={option} >
-                                            {option}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        )}
-                    </div>
+                            {field.type === "select" && (
+                                <Select
+                                    value={car[field.name] ?? ""}
+                                    onValueChange={(value) => handleChange(field.name, value)}
+                                >
+                                    <SelectTrigger id={field.name}>
+                                        <SelectValue placeholder={field.label} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {field.options?.map((option) => (
+                                            <SelectItem key={option} value={option} >
+                                                {option}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            )}
+                        </div>
 
-                );
-            })}
-            <Button onClick={(e) => addCar(e)}>Add Car</Button>
-        </form>
+                    );
+                })}
+
+                <UploadImage selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
+                <Button onClick={(e) => addCar(e)}>Add Car</Button>
+            </form>
+        </>
     );
 }

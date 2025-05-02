@@ -47,6 +47,7 @@ const router = createBrowserRouter([
       { path: "/vendor-dashboard/wallet", Component: Wallet },
     ]
   },
+
 ])
 
 
