@@ -5,6 +5,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../Contexts/AuthContext"
+import { toast } from "sonner"
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+
 
 
 
@@ -17,6 +22,8 @@ export function LoginForm({
   const [password, setPassword] = useState("")
   const [isVendor, SetIsVendor] = useState(false)
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
+  const { isVendor: is_vendor, isLogged, setIsLogged, setIsVendor, setJwtToken, jwtToken } = useAuth()
 
   const navigate = useNavigate()
 
@@ -33,7 +40,9 @@ export function LoginForm({
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return
+    if (!validate()) return;
+
+    setLoading(true);
 
 
     const url = `/foo/api/v1/${isVendor ? "vendors" : "customers"}/login`
@@ -53,19 +62,38 @@ export function LoginForm({
         body: loginForm
       });
 
-      const res = await response.json()
       if (!response.ok) {
-        alert(res.detail)
+        setLoading(false)
+        const errorData = await response.json().catch({ detail: "login Failed" })
+        toast.error(errorData.detail || "login Failed")
         return
       }
 
+      const res = await response.json()
       console.log(res)
+      setJwtToken(res.access_token)
+      setIsLogged(true)
+
+
+      if (isVendor) {
+        setIsVendor(true)
+        navigate("/vendor-dashboard")
+
+      }
+      else {
+        setIsVendor(false)
+        navigate("/")
+      }
+
 
     } catch (error) {
-      console.error(error)
-    }
+      console.error("Login error:", error)
+      toast.error("An unExcepted Error Occurred During login")
+      setLoading(false)
 
-    if (isVendor) navigate("/vendor-dashboard")
+    } finally {
+      setLoading(false)
+    }
 
   }
 
@@ -118,8 +146,10 @@ export function LoginForm({
           {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
 
         </div>
-        <Button type="submit" className="w-full" onClick={(e) => (loginSubmit(e))}>
-          Login
+        <Button type="submit" className="w-full" onClick={(e) => (loginSubmit(e))} disabled={loading ? true : false}>
+          {loading ? <AiOutlineLoading3Quarters className="animate-spin" />
+            : "Login"}
+
         </Button>
 
       </div>

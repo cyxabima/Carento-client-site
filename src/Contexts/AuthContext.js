@@ -1,7 +1,17 @@
-import React from 'react'
+import { createContext, useContext } from "react";
 
-function AuthContext() {
-    return
+export const authContext = createContext({
+    isLogged: false,
+    isVendor: false,
+    isAdmin: false,
+    jwtToken: "",
+    setIsLogged() { },
+    setIsVendor() { },
+    setIsAdmin() { },
+    setJwtToken() { }
+
+})
+
+export default function useAuth() {
+    return useContext(authContext)
 }
-
-export default AuthContext

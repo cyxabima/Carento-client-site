@@ -1,9 +1,12 @@
 import React from 'react'
 import { Button } from "./ui/button"
 import { Link, NavLink } from 'react-router-dom'
+import useAuth from '../Contexts/AuthContext'
 const Header = () => {
-    const isLogged = true
-    const vendor = true
+
+    // const isLogged = true
+    // const isVendor = true
+    const { isLogged, isVendor } = useAuth()
     return (
         <nav className='flex justify-between p-3 shadow-2xs h-18 items-center'>
             {/* logo */}
@@ -25,7 +28,7 @@ const Header = () => {
             </ul>
 
             {
-                isLogged ? <Button><Link to={vendor ? "/vendor-dashboard" : "/"}> DashBoard</Link> </Button> : <Button> <Link to={'/login'}>Login
+                isLogged ? <Button><Link to={isVendor ? "/vendor-dashboard" : "/"}> DashBoard</Link> </Button> : <Button> <Link to={'/login'}>Login
                 </Link>  </Button>
             }
 
