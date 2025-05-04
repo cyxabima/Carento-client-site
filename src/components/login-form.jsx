@@ -66,6 +66,7 @@ export function LoginForm({
         setLoading(false)
         const errorData = await response.json().catch({ detail: "login Failed" })
         toast.error(errorData.detail || "login Failed")
+        setLoading(false)
         return
       }
 

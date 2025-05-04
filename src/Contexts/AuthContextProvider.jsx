@@ -6,6 +6,15 @@ export const AuthContextProvider = ({ children }) => {
     const [isVendor, setIsVendor] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const [jwtToken, setJwtToken] = useState({})
+    
+    const toBeDoneLater = {
+        email: "",
+        first_name: "",
+        last_name: "",
+        is_business: "",
+        business_name: "",
+    }
+
 
     return (
 

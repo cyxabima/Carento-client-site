@@ -12,6 +12,9 @@ import * as FaIcons from "react-icons/fa";
 import { Button } from "../../components/ui/button";
 import { useCallback, useState } from "react";
 import UploadImage from "./UploadImage";
+import useAuth from "../../Contexts/AuthContext";
+import { toast } from "sonner";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function AddCarForm() {
     const [car, setCar] = useState({
@@ -30,11 +33,8 @@ export default function AddCarForm() {
     });
 
     const [selectedFile, setSelectedFile] = useState(null)
-
-    const token = {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoiVmVuZG9yIiwianRpIjoiMTllYzBjZjktMzFhZi00ZGEyLTg4NTYtZTQ1M2IyZDJkMzA3IiwiZXhwIjoxNzQ1NjgzOTczfQ.5DfuCAnZu9yWyLwlJJzzUHN2elYrUAGDIIG1DKiddLk",
-        "token_type": "bearer"
-    }
+    const [loading, setLoading] = useState(false)
+    const { jwtToken } = useAuth()
 
     // use of hook callback to increase efficiency in changing the form data
     const handleChange = useCallback((fieldName, value) => {
@@ -80,30 +80,54 @@ export default function AddCarForm() {
     const addCar = async (e) => {
         e.preventDefault();
 
-        const image_url = await uploadToCloudinary()
-        setCar((pre) => ({
-            ...pre, image_url: image_url
-        }))
+        setLoading(true);
+
+        const image_url = await uploadToCloudinary();
+        console.log(image_url);
+
+        // updating car to add image value
+        car.image_url = image_url
+
 
         if (!validate()) {
-            console.log("All fields are necessary")
+            toast.error("All fields are necessary")
+            setLoading(false)
             return
         }
 
         console.log(car)
-        const response = await fetch('http://127.0.0.1:8000/api/v1/vehicles/cars',
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token.access_token}`
-                },
-                body: JSON.stringify(car)
-            }
-        )
 
-        const data = await response.json()
-        console.log(data)
+
+        try {
+            const response = await fetch('/foo/api/v1/vehicles/cars',
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${jwtToken}`
+                    },
+                    body: JSON.stringify(car)
+                }
+            )
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => { detail: "Error Uploading Car" })
+                toast.error(errorData.detail || "Error Uploading Car")
+                setLoading(false)
+                return
+            }
+
+            const data = await response.json()
+            console.log(data)
+            toast.success("Car Added Successfully")
+
+        } catch (error) {
+            console.error("error msg", error)
+            toast.error("oops Something Went Wrong")
+
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -170,7 +194,10 @@ export default function AddCarForm() {
                 })}
 
                 <UploadImage selectedFile={selectedFile} setSelectedFile={setSelectedFile} />
-                <Button onClick={(e) => addCar(e)}>Add Car</Button>
+                <Button onClick={(e) => addCar(e)} disabled={loading ? true : false}>
+                    {loading ? <AiOutlineLoading3Quarters className="animate-spin" />
+                        : "Add Car"}
+                </Button>
             </form>
         </>
     );

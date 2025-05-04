@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CarItem from '../../components/CarItem'
 import CarsData from '/public/CarsData'
 import {
@@ -8,10 +8,22 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import { toast } from 'sonner'
 
 
 
 function LatestCars() {
+    const [carsData, setCarsData] = useState([])
+
+    useEffect(() => {
+        // this is an IIFE 
+        (async () => {
+            fetch("/foo/api/v1/vehicles/cars?limit=7")
+                .then((res) => res.json())
+                .then((res) => setCarsData(res)).catch((err) => { toast.error("Server is not running") })
+        })();
+    }, [])
+
     return (
         <div className=' bg-black   p-4 pb-8'>
 
@@ -20,7 +32,7 @@ function LatestCars() {
 
                 <Carousel>
                     <CarouselContent>
-                        {CarsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5" key={index} > <CarItem key={index} carData={car} /> </CarouselItem>)}
+                        {carsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5" key={index} > <CarItem key={index} carData={car} /> </CarouselItem>)}
                         {/* <CarouselItem>1.<CarItem carData={""}/></CarouselItem> */}
                     </CarouselContent>
                     <CarouselPrevious />

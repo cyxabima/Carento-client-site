@@ -13,12 +13,12 @@ function CarItem({ carData, className }) {
         <div className={cn(' rounded-3xl border-white border-2 p-4 hover:shadow-md shadow-primary cursor-pointer sm:w-80 md:w-70', className)}>
             {/* {Image of card} */}
             <div className='w-[250px] h-[200px] mx-auto flex items-center justify-center bg-white rounded-xl overflow-hidden hover:shadow-primary  hover:scale-105 transition-all duration-500' >
-                <img src={carData?.image} alt="car" />
+                <img src={carData?.image_url} alt="car" />
             </div >
 
             <div className=' p-4 '>
                 {/* Name of Car */}
-                <h2 className='font-bold text-lg mb-2 text-primary'>{carData.name}</h2>
+                <h2 className='font-bold text-lg mb-2 text-primary'>{carData.car_name}</h2>
                 <Separator className={"bg-secondary"} />
 
                 {/* Type */}
@@ -26,7 +26,7 @@ function CarItem({ carData, className }) {
                 <div className='grid grid-cols-3 mt-5 gap-4'>
                     <div>
                         <BsFuelPumpFill className='text-xl text-secondary ' />
-                        <div className='text-secondary'>{carData.fuelType}</div>
+                        <div className='text-secondary'>{carData.fuel_type}</div>
                     </div>
                     <div>
                         <PiSeatbeltFill className='text-2xl text-secondary' />
@@ -34,7 +34,7 @@ function CarItem({ carData, className }) {
                     </div>
                     <div>
                         <PiEngineFill className='text-2xl text-secondary' />
-                        <div className='text-secondary'>{carData.engine?.length > 6 ? carData.engine?.slice(0, 6) : carData.engine}</div>
+                        <div className='text-secondary'>{carData.engine_size}</div>
                     </div>
                 </div>
                 {/* <Separator className={"bg-secondary "} /> */}

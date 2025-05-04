@@ -44,7 +44,7 @@ function UploadImage({ selectedFile, setSelectedFile }) {
                                 <div className="bg-rose-300 p-4 w-full h-[130px] flex items-center justify-center rounded-2xl border border-primary border-dotted">
                                     <h2 className="text-center text-2xl text-primary font-bold">+</h2>
                                 </div></label>
-                            <input type="file" id="car-img" className="hidden" onChange={onFileSelected} />
+                            <input type="file" id="car-img" className="hidden" accept="image/*" onChange={onFileSelected} />
                         </div>
                 }
             </div>
