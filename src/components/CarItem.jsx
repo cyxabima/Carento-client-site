@@ -6,9 +6,10 @@ import { PiEngineFill } from "react-icons/pi";
 import { FaCoins } from "react-icons/fa6";
 import { Button } from './ui/button';
 import { cn } from "@/lib/utils" // i have imported that function by myself to use the concept of prop className so that i can use multiple class of same type
+import { Link } from 'react-router-dom';
+import useAuth from '../Contexts/AuthContext';
 
-
-function CarItem({ carData, className }) {
+function CarItem({ carData, className, url }) {
     return (
         <div className={cn(' rounded-3xl border-white border-2 p-4 hover:shadow-md shadow-primary cursor-pointer sm:w-80 md:w-70', className)}>
             {/* {Image of card} */}
@@ -47,7 +48,9 @@ function CarItem({ carData, className }) {
                     </div>
 
                     <div>
-                        <Button>View</Button>
+                        <Link to={url}>
+                            <Button>View</Button>
+                        </Link>
                     </div>
                 </div>
             </div>

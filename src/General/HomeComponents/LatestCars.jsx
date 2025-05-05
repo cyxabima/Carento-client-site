@@ -20,7 +20,7 @@ function LatestCars() {
         (async () => {
             fetch("/foo/api/v1/vehicles/cars?limit=7")
                 .then((res) => res.json())
-                .then((res) => setCarsData(res)).catch((err) => { toast.error("Server is not running") })
+                .then((res) => setCarsData(res)).catch((err) => { console.error("Server is not running", err) })
         })();
     }, [])
 

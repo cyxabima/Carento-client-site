@@ -1,7 +1,7 @@
 import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Home from './General/Pages/Home'
 import Login from './General/Pages/Login'
 import SignUp from './General/Pages/SignUp'
@@ -18,6 +18,9 @@ import { AuthContextProvider } from './Contexts/AuthContextProvider'
 import NotFound from './General/Pages/NotFound'
 import VendorRoutes from './protectedRoutes/VendorRoutes';
 import LoginProtectedRoute from './protectedRoutes/LoginProtectedRoute';
+import BrowseCar from './General/Pages/BrowseCar';
+import CustomerRoutes from './protectedRoutes/CustomerRoutes';
+import CarDetailsPage from './General/Pages/CarDetails';
 
 
 // const router = createBrowserRouter([
@@ -61,45 +64,47 @@ import LoginProtectedRoute from './protectedRoutes/LoginProtectedRoute';
 
 
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      {/* Main layout */}
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
 
+        <Route element={<CustomerRoutes />}>
+          <Route path="search" element={<BrowseCar />} />
+          <Route path="view-car/:uid" element={<CarDetailsPage />} />
+        </Route>
 
+        <Route element={<LoginProtectedRoute />}>
+          <Route path="login" element={<Login />} />
+        </Route>
+
+        <Route path="signup" element={<SignUp />} />
+      </Route>
+
+      {/* Vendor Dashboard layout */}
+      <Route element={<VendorRoutes />}>
+        <Route path="/vendor-dashboard" element={<DashBoardLayout />}>
+          <Route index element={<DashBoard />} />
+          <Route path="earnings" element={<Earnings />} />
+          <Route path="add-car" element={<AddCar />} />
+          <Route path="wallet" element={<Wallet />} />
+        </Route>
+      </Route>
+
+      {/* Not Found */}
+      <Route path="*" element={<NotFound />} />
+    </>
+  )
+);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
-      <Router>
-        <Routes>
-
-          {/* Main layout */}
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route element={<LoginProtectedRoute />}>
-              <Route path="login" element={<Login />} />
-            </Route>
-            <Route path="signup" element={<SignUp />} />
-          </Route>
-
-          {/* Vendor Dashboard layout */}
-
-          <Route element={<VendorRoutes />}>
-            <Route path="/vendor-dashboard" element={<DashBoardLayout />}>
-              <Route index element={<DashBoard />} />
-              <Route path="earnings" element={<Earnings />} />
-              <Route path="add-car" element={<AddCar />} />
-              <Route path="wallet" element={<Wallet />} />
-            </Route>
-
-          </Route>
-
-
-          {/* Not Found */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <RouterProvider router={router} />
     </AuthContextProvider>
-
-
-  </StrictMode>,
-)
+  </StrictMode>
+);
