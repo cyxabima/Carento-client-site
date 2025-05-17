@@ -25,7 +25,7 @@ function LatestCars() {
     }, [])
 
     return (
-        <div className=' bg-black   p-4 pb-8'>
+        <div className=' bg-black p-4 pb-8'>
 
             <h1 className='text-5xl text-center p-8  text-primary block font-bold'>Latest Cars</h1>
             <div className='sm:mx-2 mx-10 md:mx-24 '>

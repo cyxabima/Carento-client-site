@@ -7,12 +7,47 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import useAuth from '../../Contexts/AuthContext';
+import { Separator } from '../../components/ui/separator';
+import { Input } from '../../components/ui/input';
+import StarRating from '../SearchComponents/Star';
+import Comment from '../SearchComponents/Comment';
 
 const CarDetailsPage = () => {
     const { uid } = useParams();
     const [car, setCar] = useState(null);
     const [loading, setLoading] = useState(true);
     const { jwtToken } = useAuth();
+    const [toggle, setToggle] = useState(false)
+
+    const [rating, setRating] = useState(1)
+    const [newComment, setNewComment] = useState("")
+
+    const addCommentHandler = async () => {
+
+        const response = await fetch(`/foo/api/v1/reviews/create/${uid}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                body: JSON.stringify({
+                    rating: rating,
+                    review_text: newComment
+                })
+
+            }
+        );
+
+
+        if (!response.ok) {
+            toast.error("Review is not added")
+        }
+
+        toast.success("review Added successFully")
+        setToggle((pre) => !pre)
+
+    }
 
 
     useEffect(() => {
@@ -32,6 +67,7 @@ const CarDetailsPage = () => {
 
                 const data = await response.json();
                 setCar(data);
+                console.log(data)
 
             } catch (err) {
                 toast.error('Error fetching car data:', err);
@@ -41,7 +77,8 @@ const CarDetailsPage = () => {
         };
 
         fetchCarDetails();
-    }, [uid]);
+    }, [uid, toggle]);
+
 
     if (loading || !car) {
         return (
@@ -57,6 +94,8 @@ const CarDetailsPage = () => {
             </div>
         );
     }
+
+
 
     return (
         <div className="p-6  mx-auto bg-rose-100  flex justify-center">
@@ -87,7 +126,35 @@ const CarDetailsPage = () => {
                         <Button>Book Now</Button>
                     </div>
                 </CardContent>
+                <Separator />
+
+                {/* Review Section */}
+
+                <div className='p-6'>
+                    <h1 className="text-2xl font-bold">Reviews</h1>
+                    <div>
+                        <label htmlFor="comment">Your Comment</label>
+                        {/* Star Element*/}
+                        <StarRating rating={rating} setRating={setRating} />
+                        <div className='flex justify-center items-center gap-4'>
+                            <Input
+                                placeholder={"best car"}
+                                id={"comment"} className={"my-2"}
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)} />
+
+                            <Button
+                                onClick={addCommentHandler}
+                                className="float-right">
+                                post
+                            </Button>
+                        </div>
+                    </div>
+
+                    {car.reviews.map((review, index) => <Comment review={review} key={index} />)}
+                </div>
             </Card>
+
         </div>
     );
 };
