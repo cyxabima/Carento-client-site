@@ -99,7 +99,7 @@ export default function AddCarForm() {
 
 
         try {
-            const response = await fetch('/foo/api/v1/vehicles/cars',
+            const response = await fetch('/api/v1/vehicles/cars',
                 {
                     method: "POST",
                     headers: {

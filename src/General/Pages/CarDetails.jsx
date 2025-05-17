@@ -24,7 +24,7 @@ const CarDetailsPage = () => {
 
     const addCommentHandler = async () => {
 
-        const response = await fetch(`/foo/api/v1/reviews/create/${uid}`,
+        const response = await fetch(`/api/v1/reviews/create/${uid}`,
             {
                 method: "POST",
                 headers: {
@@ -55,7 +55,7 @@ const CarDetailsPage = () => {
         const fetchCarDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`/foo/api/v1/vehicles/cars/${uid}`,
+                const response = await fetch(`/api/v1/vehicles/cars/${uid}`,
                     {
                         method: "GET",
                         headers: {

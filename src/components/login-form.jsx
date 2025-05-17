@@ -45,7 +45,7 @@ export function LoginForm({
     setLoading(true);
 
 
-    const url = `/foo/api/v1/${isVendor ? "vendors" : "customers"}/login`
+    const url = `/api/v1/${isVendor ? "vendors" : "customers"}/login`
 
     console.log(isVendor)
     console.log(email)

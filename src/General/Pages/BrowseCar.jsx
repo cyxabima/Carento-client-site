@@ -24,7 +24,7 @@ function BrowseCar() {
     const getAllCars = async () => {
         try {
 
-            let url = `/foo/api/v1/vehicles/cars?limit=10&offset=0`
+            let url = `/api/v1/vehicles/cars?limit=10&offset=0`
 
             if (search != null && search != "") url += `&search=${search}`
             if (price_gt != null && price_gt != "") url += `&price_gt=${price_gt}`

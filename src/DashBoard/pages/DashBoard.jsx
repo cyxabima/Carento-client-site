@@ -19,7 +19,7 @@ function DashBoard() {
         const fetchVendorData = async () => {
             setLoading(true)
             try {
-                const response = await fetch('/foo/api/v1/vendors/me', {
+                const response = await fetch('/api/v1/vendors/me', {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

@@ -28,7 +28,7 @@ export default function SignupPage() {
 
     const handleCustomerSignup = async () => {
         setLoading(true)
-        const response = await fetch("/foo/api/v1/customers/signup", {
+        const response = await fetch("/api/v1/customers/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(customerData),
@@ -48,7 +48,7 @@ export default function SignupPage() {
 
     const handleVendorSignup = async () => {
         setLoading(true)
-        const response = await fetch("/foo/api/v1/vendors/signup", {
+        const response = await fetch("/api/v1/vendors/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(vendorData),
