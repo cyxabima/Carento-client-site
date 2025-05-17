@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/foo": {
-        target: "http://127.0.0.1:8000",
+        target: "https://carento-server-df2b9d0f3795.herokuapp.com/",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/foo/, ""),
