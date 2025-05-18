@@ -15,6 +15,7 @@ function MePage() {
     const [wallet, setWallet] = useState(null);
     const [bookings, setBookings] = useState(null);
     const [loading, setLoading] = useState(true);
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
     const fetchWithAuth = async (url, options = {}) => {
         const res = await fetch(url, {
@@ -32,9 +33,9 @@ function MePage() {
         const fetchData = async () => {
             try {
                 const [customerData, walletData, bookingData] = await Promise.all([
-                    fetchWithAuth("/api/v1/customers/me"),
-                    fetchWithAuth("/api/v1/wallet/my-wallet"),
-                    fetchWithAuth("/api/v1/booking/get_customer_bookings"),
+                    fetchWithAuth(`${baseUrl}/v1/customers/me`),
+                    fetchWithAuth(`${baseUrl}/v1/wallet/my-wallet`),
+                    fetchWithAuth(`${baseUrl}/v1/booking/get_customer_bookings`),
                 ]);
 
                 setCustomer(customerData);
@@ -59,7 +60,7 @@ function MePage() {
 
         try {
 
-            const res = await fetchWithAuth("/api/v1/wallet/add-in-wallet", {
+            const res = await fetchWithAuth(`${baseUrl}i/v1/wallet/add-in-wallet`, {
 
                 method: "PATCH",
 
@@ -69,7 +70,7 @@ function MePage() {
 
             toast.success(res.message);
 
-            const new_res = await fetchWithAuth("/api/v1/wallet/my-wallet")
+            const new_res = await fetchWithAuth(`${baseUrl}/v1/wallet/my-wallet`)
 
             setWalletLoading(false)
 
