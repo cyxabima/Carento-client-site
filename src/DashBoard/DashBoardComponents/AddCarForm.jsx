@@ -99,7 +99,8 @@ export default function AddCarForm() {
 
 
         try {
-            const response = await fetch('/api/v1/vehicles/cars',
+            const baseUrl = import.meta.env.VITE_API_BASE_URL;
+            const response = await fetch(`${baseUrl}/v1/vehicles/cars`,
                 {
                     method: "POST",
                     headers: {

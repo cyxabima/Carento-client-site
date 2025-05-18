@@ -23,8 +23,8 @@ function BrowseCar() {
 
     const getAllCars = async () => {
         try {
-
-            let url = `/api/v1/vehicles/cars?limit=10&offset=0`
+            const baseUrl = import.meta.env.VITE_API_BASE_URL;
+            let url = `${baseUrl}/v1/vehicles/cars?limit=10&offset=0`
 
             if (search != null && search != "") url += `&search=${search}`
             if (price_gt != null && price_gt != "") url += `&price_gt=${price_gt}`

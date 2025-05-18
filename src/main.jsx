@@ -21,6 +21,7 @@ import LoginProtectedRoute from './protectedRoutes/LoginProtectedRoute';
 import BrowseCar from './General/Pages/BrowseCar';
 import CustomerRoutes from './protectedRoutes/CustomerRoutes';
 import CarDetailsPage from './General/Pages/CarDetails';
+import MePage from './General/Pages/MePage';
 
 
 // const router = createBrowserRouter([
@@ -76,6 +77,7 @@ const router = createBrowserRouter(
         <Route element={<CustomerRoutes />}>
           <Route path="search" element={<BrowseCar />} />
           <Route path="view-car/:uid" element={<CarDetailsPage />} />
+          <Route path="me" element={<MePage />} />
         </Route>
 
         <Route element={<LoginProtectedRoute />}>

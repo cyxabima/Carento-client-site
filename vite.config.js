@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://carento-server-df2b9d0f3795.herokuapp.com/",
+        target: "http://localhost:8000",
         changeOrigin: true,
         secure: false,
       },

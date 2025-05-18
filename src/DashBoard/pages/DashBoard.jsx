@@ -19,7 +19,8 @@ function DashBoard() {
         const fetchVendorData = async () => {
             setLoading(true)
             try {
-                const response = await fetch('/api/v1/vendors/me', {
+                const baseUrl = import.meta.env.VITE_API_BASE_URL;
+                const response = await fetch(`${baseUrl}/v1/vendors/me`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

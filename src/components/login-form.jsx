@@ -44,8 +44,8 @@ export function LoginForm({
 
     setLoading(true);
 
-
-    const url = `/api/v1/${isVendor ? "vendors" : "customers"}/login`
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const url = `${baseUrl}/v1/${isVendor ? "vendors" : "customers"}/login`
 
     console.log(isVendor)
     console.log(email)

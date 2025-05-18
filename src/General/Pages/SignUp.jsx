@@ -28,7 +28,8 @@ export default function SignupPage() {
 
     const handleCustomerSignup = async () => {
         setLoading(true)
-        const response = await fetch("/api/v1/customers/signup", {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await fetch(`${baseUrl}/v1/customers/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(customerData),
@@ -48,7 +49,8 @@ export default function SignupPage() {
 
     const handleVendorSignup = async () => {
         setLoading(true)
-        const response = await fetch("/api/v1/vendors/signup", {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await fetch(`${baseUrl}/v1/vendors/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(vendorData),

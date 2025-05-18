@@ -11,6 +11,7 @@ import { Separator } from '../../components/ui/separator';
 import { Input } from '../../components/ui/input';
 import StarRating from '../SearchComponents/Star';
 import Comment from '../SearchComponents/Comment';
+import { BookingDialog } from './BookingDialog';
 
 const CarDetailsPage = () => {
     const { uid } = useParams();
@@ -23,8 +24,8 @@ const CarDetailsPage = () => {
     const [newComment, setNewComment] = useState("")
 
     const addCommentHandler = async () => {
-
-        const response = await fetch(`/api/v1/reviews/create/${uid}`,
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        const response = await fetch(`${baseUrl}/v1/reviews/create/${uid}`,
             {
                 method: "POST",
                 headers: {
@@ -41,11 +42,13 @@ const CarDetailsPage = () => {
 
 
         if (!response.ok) {
-            toast.error("Review is not added")
+            toast.error("Your Review is Already added!")
         }
+        else {
 
-        toast.success("review Added successFully")
-        setToggle((pre) => !pre)
+            toast.success("review Added successFully")
+            setToggle((pre) => !pre)
+        }
 
     }
 
@@ -55,7 +58,8 @@ const CarDetailsPage = () => {
         const fetchCarDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`/api/v1/vehicles/cars/${uid}`,
+                const baseUrl = import.meta.env.VITE_API_BASE_URL;
+                const response = await fetch(`${baseUrl}/v1/vehicles/cars/${uid}`,
                     {
                         method: "GET",
                         headers: {
@@ -123,7 +127,7 @@ const CarDetailsPage = () => {
                         <p className="text-lg font-semibold text-green-600">
                             Credits {car.price_per_day} / day
                         </p>
-                        <Button>Book Now</Button>
+                        <BookingDialog car_uid={car.uid} price_per_day={car.price_per_day} />
                     </div>
                 </CardContent>
                 <Separator />
