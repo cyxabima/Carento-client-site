@@ -60,7 +60,7 @@ function MePage() {
 
         try {
 
-            const res = await fetchWithAuth(`${baseUrl}i/v1/wallet/add-in-wallet`, {
+            const res = await fetchWithAuth(`${baseUrl}/v1/wallet/add-in-wallet`, {
 
                 method: "PATCH",
 
