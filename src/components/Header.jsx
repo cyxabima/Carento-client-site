@@ -28,7 +28,7 @@ const Header = () => {
             </ul>
 
             {
-                isLogged ? <Button><Link to={isVendor ? "/vendor-dashboard" : "/me"}> {isVendor?  "DashBoard" : "Me"}</Link> </Button> : <Button> <Link to={'/login'}>Login
+                isLogged ? <Button><Link to={isVendor ? "/vendor-dashboard" : "/me"}> {isVendor ? "DashBoard" : "Profile"}</Link> </Button> : <Button> <Link to={'/login'}>Login
                 </Link>  </Button>
             }
 

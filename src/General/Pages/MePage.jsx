@@ -13,7 +13,7 @@ function MePage() {
     const { jwtToken } = useAuth();
     const [customer, setCustomer] = useState(null);
     const [wallet, setWallet] = useState(null);
-    const [bookings, setBookings] = useState(null);
+    const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -100,7 +100,7 @@ function MePage() {
     const inactiveBookings = bookings?.filter(b => !b.is_active) || [];
 
     return (
-        <div className="p-6 space-y-6 bg-rose-100">
+        <div className="p-6 space-y-6 bg-rose-100 min-h-[90vh]">
             {customer && <UserProfileCard customer={customer} />}
             {wallet && <WalletCard wallet={wallet} amount={amount} setAmount={setAmount} setWallet={setWallet} walletLoading={walletLoading} handleAddAmount={handleAddAmount} />}
             {bookings && <BookingList activeBookings={activeBookings} inactiveBookings={inactiveBookings} />}

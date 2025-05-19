@@ -12,18 +12,21 @@ import { Input } from '../../components/ui/input';
 import StarRating from '../SearchComponents/Star';
 import Comment from '../SearchComponents/Comment';
 import { BookingDialog } from './BookingDialog';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const CarDetailsPage = () => {
     const { uid } = useParams();
     const [car, setCar] = useState(null);
     const [loading, setLoading] = useState(true);
     const { jwtToken } = useAuth();
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(false);
 
-    const [rating, setRating] = useState(1)
-    const [newComment, setNewComment] = useState("")
+    const [rating, setRating] = useState(1);
+    const [newComment, setNewComment] = useState("");
+    const [addCommentLoading, setAddCommentLoading] = useState(false)
 
     const addCommentHandler = async () => {
+        setAddCommentLoading(true)
         const baseUrl = import.meta.env.VITE_API_BASE_URL;
         const response = await fetch(`${baseUrl}/v1/reviews/create/${uid}`,
             {
@@ -42,10 +45,11 @@ const CarDetailsPage = () => {
 
 
         if (!response.ok) {
+            setAddCommentLoading(false)
             toast.error("Your Review is Already added!")
         }
         else {
-
+            setAddCommentLoading(false)
             toast.success("review Added successFully")
             setToggle((pre) => !pre)
         }
@@ -149,8 +153,11 @@ const CarDetailsPage = () => {
 
                             <Button
                                 onClick={addCommentHandler}
-                                className="float-right">
-                                post
+                                className="float-right"
+                                disabled={addCommentLoading}>
+
+                                {addCommentLoading ? <AiOutlineLoading3Quarters className="animate-spin" /> : "post"}
+
                             </Button>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Link } from "react-router-dom";
 
 const isAdmin = false
 
@@ -14,13 +15,11 @@ export function SiteHeader() {
         <h1 className="text-base font-medium">{isAdmin ? "Admin Panel" : "Vendor Panel"}</h1>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="rose" asChild size="sm" className="hidden sm:flex bg-primary">
-            <a
-              href="/"
-              rel="noopener noreferrer"
-              target="_blank"
+            <Link
+              to="/"
               className="dark:text-foreground">
               Home
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

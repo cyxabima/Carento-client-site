@@ -12,12 +12,16 @@ import { Calendar } from "@/components/ui/calendar";
 import { addDays, format, differenceInDays } from "date-fns";
 import useAuth from "../../Contexts/AuthContext";
 import { toast } from "sonner";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export function BookingDialog({ car_uid, price_per_day }) {
     const [dateRange, setDateRange] = useState(undefined);
     const [numberOfDays, setNumberOfDays] = useState(null);
     const [loading, setLoading] = useState(false)
     const { jwtToken } = useAuth()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (dateRange?.from && dateRange?.to) {
@@ -29,6 +33,7 @@ export function BookingDialog({ car_uid, price_per_day }) {
     }, [dateRange?.from, dateRange?.to]);
 
     const handleBooking = async (start, end) => {
+        setLoading(true)
         const payload = {
             start_date: start.toISOString().split('.')[0].replace('T', ' '), // in our data base date is without time zone
             end_date: end.toISOString().split('.')[0].replace('T', ' '),
@@ -46,19 +51,23 @@ export function BookingDialog({ car_uid, price_per_day }) {
 
         if (res.ok) {
             toast.success(`Booking confirmed for ${numberOfDays} days!`);
+            setLoading(false)
+            navigate("/me")
         } else if (res.status == 400) {
             toast.error("Car is already booked or You have less credit.");
+            setLoading(false)
         }
         else {
-            alert("Booking failed! For Unknown Reason");
+            toast.error("Booking failed! For Unknown Reason");
+            setLoading(false)
 
         }
         // console.log(payload)
     };
 
     const handleConfirm = () => {
-        if (!dateRange?.from || !dateRange?.to) return alert("Please select both start and end dates.");
-        if (numberOfDays === null || numberOfDays <= 0) return alert("Invalid date range selected.");
+        if (!dateRange?.from || !dateRange?.to) return toast.error("Please select both start and end dates.");
+        if (numberOfDays === null || numberOfDays <= 0) return toast.error("Invalid date range selected.");
         handleBooking(dateRange.from, dateRange.to);
     };
 
@@ -106,7 +115,7 @@ export function BookingDialog({ car_uid, price_per_day }) {
                         </>
                     )}
                     <Button onClick={handleConfirm} disabled={!dateRange?.from || !dateRange?.to || loading}>
-                        Confirm Booking
+                        {loading ? <AiOutlineLoading3Quarters className="animate-spin" /> : "Confirm Booking"}
                     </Button>
                 </DialogFooter>
             </DialogContent>

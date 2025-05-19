@@ -11,8 +11,6 @@ import Contact from './General/Pages/Contact'
 import MainLayout from './layout/MainLayout'
 import DashBoardLayout from './DashBoard/pages/DashBoardLayout'
 import DashBoard from './DashBoard/pages/DashBoard'
-import Earnings from './DashBoard/pages/Earnings'
-import Wallet from './DashBoard/pages/Wallet'
 import AddCar from './DashBoard/pages/AddCar'
 import { AuthContextProvider } from './Contexts/AuthContextProvider'
 import NotFound from './General/Pages/NotFound'
@@ -22,6 +20,8 @@ import BrowseCar from './General/Pages/BrowseCar';
 import CustomerRoutes from './protectedRoutes/CustomerRoutes';
 import CarDetailsPage from './General/Pages/CarDetails';
 import MePage from './General/Pages/MePage';
+import BookingsPage from './DashBoard/pages/BookingsPage';
+import AllCustomers from './DashBoard/pages/AllCustomers';
 
 
 // const router = createBrowserRouter([
@@ -91,9 +91,9 @@ const router = createBrowserRouter(
       <Route element={<VendorRoutes />}>
         <Route path="/vendor-dashboard" element={<DashBoardLayout />}>
           <Route index element={<DashBoard />} />
-          <Route path="earnings" element={<Earnings />} />
+          <Route path="bookings" element={<BookingsPage />} />
           <Route path="add-car" element={<AddCar />} />
-          <Route path="wallet" element={<Wallet />} />
+          <Route path="customers" element={<AllCustomers />} />
         </Route>
       </Route>
 

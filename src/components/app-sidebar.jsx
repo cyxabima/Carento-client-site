@@ -15,6 +15,9 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
+  IconUserCog
+
+
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -48,14 +51,14 @@ const data = {
       icon: IconListDetails,
     },
     {
-      title: "Earnings",
-      url: "/vendor-dashboard/earnings",
+      title: "Bookings",
+      url: "/vendor-dashboard/bookings",
       icon: IconChartBar,
     },
     {
-      title: "Wallets",
-      url: "/vendor-dashboard/wallet",
-      icon: IconFolder,
+      title: "Customers",
+      url: "/vendor-dashboard/customers",
+      icon: IconUserCog,
     },
   ],
   navClouds: [
@@ -120,7 +123,7 @@ export function AppSidebar({
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <Link href="/">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Carento</span>
+                <span className="text-base font-bold">Carento</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -129,9 +132,6 @@ export function AppSidebar({
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }

@@ -9,11 +9,14 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import { toast } from 'sonner'
+import useAuth from '../../Contexts/AuthContext'
 
 
 
 function LatestCars() {
     const [carsData, setCarsData] = useState([])
+    const { isLogged, isVendor } = useAuth()
+    const url = (isLogged && !isVendor) ? "" : ""
 
     useEffect(() => {
         // this is an IIFE 
@@ -33,7 +36,7 @@ function LatestCars() {
 
                 <Carousel>
                     <CarouselContent>
-                        {carsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5" key={index} > <CarItem key={index} carData={car} /> </CarouselItem>)}
+                        {carsData.map((car, index) => <CarouselItem className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5" key={index} > <CarItem key={index} carData={car} url={(isLogged && !isVendor) ? `/view-car/${car.uid}` : "/login"} /> </CarouselItem>)}
                         {/* <CarouselItem>1.<CarItem carData={""}/></CarouselItem> */}
                     </CarouselContent>
                     <CarouselPrevious />

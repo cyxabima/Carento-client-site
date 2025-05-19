@@ -21,7 +21,7 @@ function BookingList({ activeBookings, inactiveBookings }) {
                                     <img
                                         src={booking.car.image_url}
                                         alt={booking.car.car_name}
-                                        className="rounded w-full h-40 object-cover"
+                                        className="rounded w-full "
                                     />
                                     <h4 className="text-lg font-bold">
                                         {booking.car.car_name} ({booking.car.brand})
