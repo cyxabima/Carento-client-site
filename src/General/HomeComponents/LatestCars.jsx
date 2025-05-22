@@ -23,7 +23,15 @@ function LatestCars() {
         (async () => {
 
             fetch(`${import.meta.env.VITE_API_BASE_URL}/v1/vehicles/cars?limit=7`)
-                .then((res) => res.json())
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json()
+
+                    }
+                    else {
+                        throw new Error("Failed")
+                    }
+                })
                 .then((res) => setCarsData(res)).catch((err) => { console.error("Server is not running", err) })
         })();
     }, [])

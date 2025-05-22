@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
+import { Button } from '../../components/ui/button'
+import useAuth from '../../Contexts/AuthContext';
+import { toast } from 'sonner';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
+function BookingList({ activeBookings, inactiveBookings, setTrigger }) {
+    const { jwtToken } = useAuth()
 
-function BookingList({ activeBookings, inactiveBookings }) {
+    const [loading, setLoading] = useState(false);
+
+    const carReturnHandler = async (booking_uid) => {
+        setLoading(true)
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        try {
+            const res = await fetch(`${baseUrl}/v1/booking/delete/${booking_uid}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`,
+                    "Content-Type": "application/json",
+                }
+            })
+            const data = res.json()
+
+            if (res.ok) {
+                toast.success("Returned SuccessFully ")
+                setLoading(false)
+                setTrigger((pre) => !pre)
+            }
+            else {
+                toast.error(data.detail)
+                setLoading(false)
+            }
+        } catch (error) {
+            toast.error("Deletion failed")
+            setLoading(false)
+        } finally {
+            setLoading(false)
+        }
+
+    }
+
     if (activeBookings.length === 0 && inactiveBookings.length === 0) {
         return null; // Or a message like "No bookings yet."
     }
@@ -32,6 +70,14 @@ function BookingList({ activeBookings, inactiveBookings }) {
                                     <p>Start: {format(new Date(booking.start_date), "PPP p")}</p>
                                     <p>End: {format(new Date(booking.end_date), "PPP p")}</p>
                                     <p>Price per Day: Rs {booking.car.price_per_day}</p>
+
+                                    <Button className={"hover:cursor-pointer"} onClick={() => carReturnHandler(booking.uid)}
+                                        disabled={loading}>
+                                        {
+                                            loading ? <AiOutlineLoading3Quarters className='text-center animate-spin' /> : "Return"
+                                        }
+
+                                    </Button>
                                 </CardContent>
                             </Card>
                         ))}

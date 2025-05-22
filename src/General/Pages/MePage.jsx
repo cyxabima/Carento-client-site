@@ -15,6 +15,7 @@ function MePage() {
     const [wallet, setWallet] = useState(null);
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [trigger, setTrigger] = useState(false)
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
     const fetchWithAuth = async (url, options = {}) => {
@@ -49,7 +50,7 @@ function MePage() {
         };
 
         fetchData();
-    }, [jwtToken]);
+    }, [jwtToken,trigger]);
 
     const [amount, setAmount] = useState(0);
     const [walletLoading, setWalletLoading] = useState(false);
@@ -103,7 +104,7 @@ function MePage() {
         <div className="p-6 space-y-6 bg-rose-100 min-h-[90vh]">
             {customer && <UserProfileCard customer={customer} />}
             {wallet && <WalletCard wallet={wallet} amount={amount} setAmount={setAmount} setWallet={setWallet} walletLoading={walletLoading} handleAddAmount={handleAddAmount} />}
-            {bookings && <BookingList activeBookings={activeBookings} inactiveBookings={inactiveBookings} />}
+            {bookings && <BookingList activeBookings={activeBookings} inactiveBookings={inactiveBookings} setTrigger={setTrigger}/>}
         </div>
     );
 }

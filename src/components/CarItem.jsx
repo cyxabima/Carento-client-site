@@ -19,8 +19,8 @@ function CarItem({ carData, className, url, deleteCarHandler }) {
             {deleteCarHandler ? <Badge className={`${carData.is_booked ? "bg-green-500 hover:bg-green-600 text-green " : "bg-red-500 hover:bg-red-600 text-red"}} mb-3`}>{carData.is_booked ? "Booked" : "Not Booked"}</Badge> : ""}
 
             {/* {Image of card} */}
-            <div className='w-[250px] h-[200px] mx-auto flex items-center justify-center bg-white rounded-xl overflow-hidden hover:shadow-primary  hover:scale-105 transition-all duration-500' >
-                <img src={carData?.image_url} alt="car" />
+            <div className='w-[230px] md:w-[250px] h-[200px] mx-auto flex items-center justify-center bg-white rounded-xl overflow-hidden hover:shadow-primary  hover:scale-105 transition-all duration-500' >
+                <img src={carData?.image_url} alt="car"  />
             </div >
 
             <div className=' p-4 '>
